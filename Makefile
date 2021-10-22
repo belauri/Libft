@@ -6,11 +6,15 @@
 #    By: lbrazale <lbrazale@student.42madrid.es>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/06 12:35:51 by lbrazale          #+#    #+#              #
-#    Updated: 2021/09/20 12:13:58 by lbrazale         ###   ########.fr        #
+#    Updated: 2021/10/22 13:33:11 by lbrazale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = 	ft_isalpha.c	\
+SRC_DIR = src/
+INC_DIR = inc/
+
+SRC = 	$(addprefix $(SRC_DIR),\
+		ft_isalpha.c	\
 		ft_isdigit.c	\
 		ft_isalnum.c	\
 		ft_isascii.c	\
@@ -44,50 +48,39 @@ SRC = 	ft_isalpha.c	\
 		ft_putstr_fd.c	\
 		ft_putendl_fd.c	\
 		ft_putnbr_fd.c	\
-		
-
-BONUS_SRC =	ft_lstnew_bonus.c		\
-			ft_lstadd_front_bonus.c	\
-			ft_lstsize_bonus.c		\
-			ft_lstlast_bonus.c		\
-			ft_lstadd_back_bonus.c	\
-			ft_lstdelone_bonus.c	\
-			ft_lstclear_bonus.c		\
-			ft_lstiter_bonus.c		\
-			ft_lstmap_bonus.c		\
-
-SEARCH = libft.h
+		ft_lstnew_bonus.c		\
+		ft_lstadd_front_bonus.c	\
+		ft_lstsize_bonus.c		\
+		ft_lstlast_bonus.c		\
+		ft_lstadd_back_bonus.c	\
+		ft_lstdelone_bonus.c	\
+		ft_lstclear_bonus.c		\
+		ft_lstiter_bonus.c		\
+		ft_lstmap_bonus.c)
 
 OBJ = $(SRC:.c=.o)
 
-BONUS_OBJ = $(BONUS_SRC:.c=.o)
-
 AR = ar rcs
-
-RM = rm -f
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+INC = -I$(INC_DIR)
+
+CFLAGS = -Wall -Werror -Wextra $(INC)
 
 NAME = libft.a
 
-$(NAME): $(OBJ) $(SEARCH)
+$(NAME): $(OBJ)
 		$(AR) $(NAME) $(OBJ)
 
 all: $(NAME)
 
-bonus: $(BONUS_OBJ) $(SEARCH)
-		$(AR) $(NAME) $(BONUS_OBJ)
-
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
 		$(RM) $(NAME)
 
 re: fclean all
 
-rebonus: fclean bonus
-
-.PHONY = all clean fclean bonus re
+.PHONY = all clean fclean re
